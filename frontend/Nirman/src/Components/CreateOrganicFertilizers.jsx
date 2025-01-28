@@ -144,13 +144,6 @@ const CreateOrganicFertilizers = () => {
 
       <div className="page-container">
         <header className="header">
-          <button className="back-button">
-          
-            <ArrowLeft className="back-icon" />
-            <Link to="/" style={{ textDecoration: 'none' }}>
-            Back to Home
-          </Link>
-          </button>
           <h1 className="header-title">Create Organic Fertilizers</h1>
           <p className="header-subtitle">
             Learn how to make natural fertilizers from household waste
