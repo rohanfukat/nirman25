@@ -19,6 +19,7 @@ const SignUp = () => {
  justifyContent: 'center',
  alignItems: 'center',
  padding: '2rem',
+ width:'100vw',
  },
  formContainer: {
  backgroundColor: '#1e293b',

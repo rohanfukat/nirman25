@@ -22,7 +22,7 @@ const PlanAFarmVisit = () => {
           .container {
             background-color: #0f172a;
             padding: 0; /* Remove padding */
-            width: 100%;
+            width: 100vw;
             display: flex;
             justify-content: center; /* Horizontally center */
             align-items: center; /* Vertically center */

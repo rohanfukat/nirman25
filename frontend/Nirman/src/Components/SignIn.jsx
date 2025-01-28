@@ -1,100 +1,25 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    identifier: '', // for account name/email
-    password: ''
+    identifier: "", // for account name/email
+    password: "",
   });
 
   const [errors, setErrors] = useState({});
 
-  const styles = {
-    container: {
-      backgroundColor: '#0f172a',
-      minHeight: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '2rem',
-    },
-    formContainer: {
-      backgroundColor: '#1e293b',
-      padding: '2rem',
-      borderRadius: '0.5rem',
-      width: '100%',
-      maxWidth: '24rem',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-    },
-    title: {
-      color: '#f0fdf4',
-      fontSize: '1.875rem',
-      fontWeight: 'bold',
-      marginBottom: '2rem',
-      textAlign: 'center',
-    },
-    formGroup: {
-      marginBottom: '1.5rem',
-    },
-    label: {
-      display: 'block',
-      color: '#4ade80',
-      marginBottom: '0.5rem',
-      fontSize: '1rem',
-      fontWeight: '500',
-    },
-    input: {
-      width: '100%',
-      padding: '0.75rem',
-      backgroundColor: '#0f172a',
-      border: '1px solid #334155',
-      borderRadius: '0.375rem',
-      color: '#f0fdf4',
-      fontSize: '1rem',
-      outline: 'none',
-      transition: 'border-color 0.2s ease',
-    },
-    error: {
-      color: '#ef4444',
-      fontSize: '0.875rem',
-      marginTop: '0.25rem',
-    },
-    buttonContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      marginBottom: '1rem',
-    },
-    button: {
-      backgroundColor: '#16a34a',
-      color: 'white',
-      padding: '0.75rem 2rem',
-      borderRadius: '0.5rem',
-      border: 'none',
-      fontSize: '1rem',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'background-color 0.2s ease',
-    },
-    signUpLink: {
-      color: '#4ade80',
-      textAlign: 'center',
-      display: 'block',
-      textDecoration: 'none',
-      fontSize: '0.875rem',
-    }
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: "",
       }));
     }
   };
@@ -102,11 +27,11 @@ const SignIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
-   
+
     // Validate all fields
-    Object.keys(formData).forEach(key => {
+    Object.keys(formData).forEach((key) => {
       if (!formData[key].trim()) {
-        newErrors[key] = 'This field is required';
+        newErrors[key] = "This field is required";
       }
     });
 
@@ -117,55 +42,170 @@ const SignIn = () => {
     }
 
     // Handle successful form submission here
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.formContainer}>
-        <h1 style={styles.title}>Sign In</h1>
-       
-        <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Account Name / Mail:</label>
-            <input
-              type="text"
-              name="identifier"
-              style={styles.input}
-              value={formData.identifier}
-              onChange={handleChange}
-              placeholder="Enter your account name or email"
-            />
-            {errors.identifier && <span style={styles.error}>{errors.identifier}</span>}
-          </div>
+    <>
+      <style>
+        {`
+            * {
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+            }
 
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Password:</label>
-            <input
-              type="password"
-              name="password"
-              style={styles.input}
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-            />
-            {errors.password && <span style={styles.error}>{errors.password}</span>}
-          </div>
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #1e293b;
+              margin: 0;
+              padding: 0;
+            }
 
-          <div style={styles.buttonContainer}>
-            <button type="submit" style={styles.button}>
-              Login
-            </button>
-          </div>
-         
-          <a href="#" style={styles.signUpLink}>
-          <Link to="/signup" style={{ textDecoration: 'none' }}>
-            Don't have an account? Sign up
+            .page-container {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              width:100vw;
+              padding: 24px;
+              background-color: #1e293b;
+            }
+
+            .form-container {
+              width: 100vh;
+              padding: 24px;
+              background-color: #0f172a;
+              border-radius: 12px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .form-title {
+              text-align: center;
+              font-size: 2rem;
+              font-weight: bold;
+              color: #4ade80;
+              margin-bottom: 24px;
+            }
+
+            .form-group {
+              margin-bottom: 16px;
+            }
+
+            label {
+              display: block;
+              font-weight: 600;
+              color: #94a3b8;
+              margin-bottom: 8px;
+            }
+
+            input {
+              width: 100%;
+              padding: 12px;
+              border: 1px solid #334155;
+              border-radius: 8px;
+              background-color: #1e293b;
+              color: #f8fafc;
+              font-size: 1rem;
+              outline: none;
+              transition: border-color 0.3s ease;
+            }
+
+            input:focus {
+              border-color: #4ade80;
+            }
+
+            .error-message {
+              margin-top: 4px;
+              font-size: 0.875rem;
+              color: #ef4444;
+            }
+
+            .button-container {
+              text-align: center;
+              margin-top: 16px;
+            }
+
+            .form-button {
+              width: 100%;
+              padding: 12px;
+              font-size: 1rem;
+              font-weight: 600;
+              color: white;
+              background-color: #4ade80;
+              border: none;
+              border-radius: 8px;
+              cursor: pointer;
+              transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+            }
+
+            .form-button:hover {
+              background-color: #38b2ac;
+              transform: scale(1.05);
+            }
+
+            .form-button:focus {
+              outline: none;
+              box-shadow: 0 0 0 4px rgba(72, 219, 141, 0.6);
+            }
+
+            .sign-up-link {
+              display: block;
+              text-align: center;
+              margin-top: 16px;
+              font-size: 0.875rem;
+              color: #4ade80;
+              text-decoration: none;
+              transition: color 0.3s ease;
+            }
+
+            .sign-up-link:hover {
+              color: #38b2ac;
+            }
+        `}
+      </style>
+      <div className="page-container">
+        <div className="form-container">
+          <h1 className="form-title">Sign In</h1>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Account Name / Mail:</label>
+              <input
+                type="text"
+                name="identifier"
+                value={formData.identifier}
+                onChange={handleChange}
+                placeholder="Enter your account name or email"
+              />
+              {errors.identifier && (
+                <span className="error-message">{errors.identifier}</span>
+              )}
+            </div>
+            <div className="form-group">
+              <label>Password:</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+              />
+              {errors.password && (
+                <span className="error-message">{errors.password}</span>
+              )}
+            </div>
+            <div className="button-container">
+              <button type="submit" className="form-button">
+                Login
+              </button>
+            </div>
+            <Link to="/signup" className="sign-up-link">
+              Don't have an account? Sign up
             </Link>
-          </a>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

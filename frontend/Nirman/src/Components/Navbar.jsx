@@ -16,8 +16,8 @@ const Navbar = () => {
       justifyContent: 'space-between',
       alignItems: 'center',
       maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '0 1rem',
+      margin: '0',
+      padding: '0',
     },
     logo: {
       color: '#4ade80', // Emerald-400
