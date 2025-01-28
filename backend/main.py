@@ -3,6 +3,7 @@ from models import userRegister,userLogin,farmerDetail
 from db import user_collection,farm_vist_collection
 from fastapi.middleware.cors import CORSMiddleware
 import cloudinary.uploader
+from typing import List
 
 import requests
 import os
@@ -24,7 +25,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # specific frontend ka URL de sakte ho
+    allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],  # specific frontend ka URL de sakte ho
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -48,7 +49,8 @@ async def user_register(user:userRegister):
 
 @app.post("/login")
 async def user_login(user:userLogin):
-    get_user = await user_collection.find_one({"username":user.username})
+    print(user)
+    get_user = await user_collection.find_one({"email":user.email})
     if get_user == None:
         return {"User Not Found"}
     
@@ -116,5 +118,20 @@ async def farmbot(ip:str):
     response = requests.request("POST", url, json=payload, headers=headers)
 
     return str(response.text)
+
+def serialize_document(document):
+    document["_id"] = str(document["_id"])  # Convert ObjectId to string
+    return document
+
+@app.get("/all-farm-visit", response_model=List[dict])
+async def allFarmVisit():
+    cursor = farm_vist_collection.find()  # Find all documents in the collection
+    documents = []
+    
+    async for document in cursor:
+        documents.append(serialize_document(document))
+    
+    return documents
+    
 
 

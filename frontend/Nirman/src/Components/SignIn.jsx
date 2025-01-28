@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
-    identifier: "", // for account name/email
+    email: "", // for account name/email
     password: "",
   });
 
@@ -24,7 +24,7 @@ const SignIn = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -41,8 +41,24 @@ const SignIn = () => {
       return;
     }
 
-    // Handle successful form submission here
-    console.log("Form submitted:", formData);
+    try {
+      const response = await fetch("http://127.0.0.1:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(JSON.stringify(data));
+      } else {
+        alert("Error: " + JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    
   };
 
   return (
@@ -172,13 +188,13 @@ const SignIn = () => {
               <label>Account Name / Mail:</label>
               <input
                 type="text"
-                name="identifier"
-                value={formData.identifier}
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your account name or email"
               />
-              {errors.identifier && (
-                <span className="error-message">{errors.identifier}</span>
+              {errors.email && (
+                <span className="error-message">{errors.email}</span>
               )}
             </div>
             <div className="form-group">

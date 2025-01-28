@@ -1,16 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const PlanAFarmVisit = () => {
-  // Placeholder array for 10 cards
-  const farmers = Array.from({ length: 10 }, (_, index) => ({
-    id: index + 1,
-    name: `Farmer ${index + 1}`,
-    village: "-",
-    location: "-",
-    size: "-",
-    cropType: "-",
-    timeSlot: "-",
-  }));
+  const [farmers, setFarmers] = useState([]); // Initial state is an empty array
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFarmers = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/all-farm-visit"); // Replace with your API URL
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+
+        
+        // Check if data is an array before updating the state
+        if (Array.isArray(data)) {
+          setFarmers(data);
+        } else {
+          throw new Error("Data is not an array");
+        }
+
+        setLoading(false); // Set loading to false after data is fetched
+      } catch (err) {
+        setError(err.message); // Set error message if there was an error
+        setLoading(false);
+      }
+    };
+
+    fetchFarmers();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <>
@@ -123,14 +152,16 @@ const PlanAFarmVisit = () => {
 
       <div className="container">
         {farmers.map((farmer) => (
-          <div key={farmer.id} className="card">
+          <div key={farmer._id} className="card">
             <div className="content">
               {/* Left side - Image */}
               <div className="image-container">
                 <img
-                  src="/api/placeholder/200/300"
+                  src={farmer.url}
                   alt="Farmer profile"
                   className="image"
+                  style={{ width: "400px", height: "400px" }}
+
                 />
               </div>
 
@@ -148,18 +179,18 @@ const PlanAFarmVisit = () => {
                     <span className="value">{farmer.location}</span>
 
                     <span className="label">Size of farm:</span>
-                    <span className="value">{farmer.size}</span>
+                    <span className="value">{farmer.acres}</span>
 
                     <span className="label">Crop Type:</span>
-                    <span className="value">{farmer.cropType}</span>
+                    <span className="value">{farmer.crop}</span>
 
                     <span className="label">Time Slot:</span>
-                    <span className="value">{farmer.timeSlot}</span>
+                    <span className="value">{farmer.time_slot}</span>
                   </div>
                 </div>
 
                 {/* Button */}
-                <div className="flex justify-center">
+                <div className="flex justify-start">
                   <button className="button">Book Appointment</button>
                 </div>
               </div>

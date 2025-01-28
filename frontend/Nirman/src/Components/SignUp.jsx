@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SignUp = () => {
  const [formData, setFormData] = useState({
- accountName: '',
+ username: '',
  email: '',
  phone: '',
  password: ''
@@ -99,7 +99,7 @@ const SignUp = () => {
  }
  };
 
- const handleSubmit = (e) => {
+ const handleSubmit = async(e) => {
  e.preventDefault();
  const newErrors = {};
 
@@ -110,11 +110,25 @@ const SignUp = () => {
  }
  });
 
- // If there are errors, show them and don't submit
- if (Object.keys(newErrors).length > 0) {
- setErrors(newErrors);
- return;
- }
+ try {
+    const response = await fetch("http://127.0.0.1:8000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    console.log(data)
+    if (response.ok) {
+        alert("User created successfully: " + JSON.stringify(data.username));
+    } else {
+      alert("Error: " + JSON.stringify(data));
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+
 
  // Handle successful form submission here
  console.log('Form submitted:', formData);
@@ -127,15 +141,15 @@ const SignUp = () => {
 
  <form onSubmit={handleSubmit}>
  <div style={styles.formGroup}>
- <label style={styles.label}>Account Name:</label>
+ <label style={styles.label}>Username:</label>
  <input
  type="text"
- name="accountName"
+ name="username"
  style={styles.input}
- value={formData.accountName}
+ value={formData.username}
  onChange={handleChange}
  />
- {errors.accountName && <span style={styles.error}>{errors.accountName}</span>}
+ {errors.username && <span style={styles.error}>{errors.username}</span>}
  </div>
 
  <div style={styles.formGroup}>
