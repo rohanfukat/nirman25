@@ -22,6 +22,8 @@ import PInsuranceTerms from './PremiumComponents/InsuranceTerms';
 import PCropForm from './PremiumComponents/PCropForm';
 import PCropAns from './PremiumComponents/PCropAns';
 
+import CommunityPage from './Components/Community';
+
 // Wrapper component to handle navbar logic
 const AppContent = ({ token, setToken }) => {
   const location = useLocation();
@@ -92,6 +94,8 @@ const AppContent = ({ token, setToken }) => {
         />
         <Route path="/crop-form-premium" element={<PCropForm />} />
         <Route path="/crop-ans-premium" element={<PCropAns />} />
+
+        <Route path="/community" element={<CommunityPage />} />
       </Routes>
     </>
   );
