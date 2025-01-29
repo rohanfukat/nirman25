@@ -13,6 +13,7 @@ import VerandaCropRecommender from './Components/VerandaCropRecommendation';
 import BuyPremium from './Components/BuyPremium';
 import InsuranceTerms from './Components/InsuranceTerms';
 import PremiumPurchase from './Components/PremiumPurchase';
+import WeatherDashboard from './Components/WeatherDashboard';
 
 const App = () => {
   return (
