@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Thermometer, Droplets, Wind, ArrowDown, ArrowUp, Gauge, MapPin } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const WeatherDashboard = () => {
   const [location, setLocation] = useState('');
@@ -61,7 +62,7 @@ const WeatherDashboard = () => {
       justifyContent: 'center',
       alignItems: 'center',
       marginBottom: '1.5rem',
-      height:'10px'
+      height: '10px',
     },
     tempDisplay: {
       textAlign: 'center',
@@ -111,13 +112,31 @@ const WeatherDashboard = () => {
       fontSize: '1rem',
       marginLeft: '0.25rem',
     },
+    buttonContainer: {
+      textAlign: 'center',
+      marginTop: '2rem',
+    },
+    button: {
+      backgroundColor: '#4ade80',
+      color: '#1e293b',
+      border: 'none',
+      padding: '0.75rem 1.5rem',
+      fontSize: '1rem',
+      fontWeight: 'bold',
+      borderRadius: '0.5rem',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s ease',
+    },
+    buttonHover: {
+      backgroundColor: '#22c55e',
+    },
   };
 
   const WeatherCard = ({ icon: Icon, title, value, unit }) => (
-    <div 
+    <div
       style={styles.weatherCard}
-      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+      onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.02)')}
+      onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
     >
       <div style={styles.weatherCardContent}>
         <Icon style={{ color: '#4ade80' }} size={32} />
@@ -158,7 +177,7 @@ const WeatherDashboard = () => {
             <p style={styles.feelsLike}>Feels like {weatherData.feels_like}°C</p>
           </div>
         </div>
-        
+
         <div style={styles.verticalLayout}>
           <WeatherCard
             icon={ArrowDown}
@@ -197,6 +216,17 @@ const WeatherDashboard = () => {
             unit="m/s"
           />
         </div>
+      </div>
+
+      <div style={styles.buttonContainer}>
+        <button
+          style={styles.button}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = styles.buttonHover.backgroundColor)}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = styles.button.backgroundColor)}
+        ><Link to='/crop-form-premium'>
+          Continue
+          </Link>
+        </button>
       </div>
     </div>
   );

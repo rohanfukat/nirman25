@@ -13,7 +13,7 @@ class userRegister(BaseModel):
 
 
 class userLogin(BaseModel):
-    email: EmailStr
+    username: str
     password: str = Field(
         ..., min_length=8, description="Password must be 8 characters long"
     )
@@ -26,3 +26,13 @@ class farmerDetail(BaseModel):
     acres: str
     crop: str
     time_slot: str
+
+class prediction(BaseModel):
+    nitrogen : float
+    phosphorus : float
+    potassium : float
+    temp : float
+    humidity : float
+    ph : float
+    rainfall : float
+

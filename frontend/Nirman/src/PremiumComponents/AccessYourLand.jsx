@@ -10,7 +10,7 @@ const PAccessYourLand = () => {
       squareFeet: "24 sq ft",
       icon: Square,
       description: "Perfect for container gardens and vertical growing systems",
-      route: "balcony-crop-recommendation",
+      route: "/access-your-land-premium/weather-dashboard-premium",
     },
     {
       title: "Rooftop",
@@ -18,7 +18,7 @@ const PAccessYourLand = () => {
       squareFeet: "96 sq ft",
       icon: Building,
       description: "Ideal for mixed container gardens and small raised beds",
-      route: "rooftop-crop-recommendation",
+      route: "/access-your-land-premium/weather-dashboard-premium",
     },
     {
       title: "Veranda",
@@ -26,7 +26,7 @@ const PAccessYourLand = () => {
       squareFeet: "300 sq ft",
       icon: Home,
       description: "Suitable for extensive garden beds and greenhouse setups",
-      route: "veranda-crop-recommendation",
+      route: "/access-your-land-premium/weather-dashboard-premium",
     },
   ];
 

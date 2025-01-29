@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 const BalconyCropRecommender = () => {
   const [weather, setWeather] = useState('');
   const [purpose, setPurpose] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [recommendation, setRecommendation] = useState(null);
 
   const styles = {
     container: {
@@ -12,7 +14,7 @@ const BalconyCropRecommender = () => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: '2rem',
-      width:'100vw'
+      width: '100vw'
     },
     formContainer: {
       backgroundColor: '#1e293b',
@@ -58,6 +60,23 @@ const BalconyCropRecommender = () => {
       color: '#f0fdf4',
       fontSize: '1rem',
       lineHeight: '1.5',
+    },
+    loading: {
+      marginTop: '2rem',
+      padding: '1rem',
+      backgroundColor: '#1e40af',
+      borderRadius: '0.5rem',
+      color: '#f0fdf4',
+      fontSize: '1rem',
+      textAlign: 'center',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '0.5rem',
+    },
+    dots: {
+      display: 'inline-block',
+      animation: 'ellipsis 1.5s infinite',
     }
   };
 
@@ -94,6 +113,25 @@ const BalconyCropRecommender = () => {
     return null;
   };
 
+  const handleSelectionChange = (type, value) => {
+    if (type === 'weather') {
+      setWeather(value);
+    } else {
+      setPurpose(value);
+    }
+
+    setRecommendation(null); // Reset recommendation when selection changes
+    
+    if (type === 'weather' && purpose || type === 'purpose' && weather) {
+      setLoading(true);
+      setTimeout(() => {
+        const newRecommendation = getCropRecommendation();
+        setRecommendation(newRecommendation);
+        setLoading(false);
+      }, 5000); // 5 second delay
+    }
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.formContainer}>
@@ -106,7 +144,7 @@ const BalconyCropRecommender = () => {
           <select
             style={styles.select}
             value={weather}
-            onChange={(e) => setWeather(e.target.value)}
+            onChange={(e) => handleSelectionChange('weather', e.target.value)}
           >
             <option value="">Select weather</option>
             <option value="Sunny">Sunny</option>
@@ -123,17 +161,22 @@ const BalconyCropRecommender = () => {
           <select
             style={styles.select}
             value={purpose}
-            onChange={(e) => setPurpose(e.target.value)}
+            onChange={(e) => handleSelectionChange('purpose', e.target.value)}
           >
             <option value="">Select purpose</option>
             <option value="Selling in the market">Selling in the market</option>
             <option value="Consuming yourself">Consuming yourself</option>
           </select>
         </div>
-
-        {getCropRecommendation() && (
+        
+        {loading ? (
+          <div style={styles.loading}>
+            Analyzing best crops for your conditions
+            <span style={styles.dots}>...</span>
+          </div>
+        ) : recommendation && (
           <div style={styles.recommendation}>
-            {getCropRecommendation()}
+            {recommendation}
           </div>
         )}
       </div>
