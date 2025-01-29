@@ -13,7 +13,7 @@ class userRegister(BaseModel):
 
 
 class userLogin(BaseModel):
-    username: str
+    email: str
     password: str = Field(
         ..., min_length=8, description="Password must be 8 characters long"
     )
@@ -35,4 +35,10 @@ class prediction(BaseModel):
     humidity : float
     ph : float
     rainfall : float
+
+
+class insuranceDetail(BaseModel):
+    name:str
+    email:EmailStr
+    description:str
 

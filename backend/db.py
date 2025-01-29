@@ -7,3 +7,4 @@ db = client["Farmer_DB"]
 
 user_collection = db["User_Data"]
 farm_vist_collection = db["Farm_Visit"]
+farm_insurance = db["Farm_Insurance"]

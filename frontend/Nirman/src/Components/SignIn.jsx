@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const SignIn = ({setToken}) => {
   const [formData, setFormData] = useState({
     email: "", // for account name/email
     password: "",
   });
 
-  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,6 +29,7 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
+
 
     // Validate all fields
     Object.keys(formData).forEach((key) => {
@@ -52,10 +53,15 @@ const SignIn = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert(JSON.stringify(data));
+        console.log("Hello")
+        alert("Login Successfull");
+        const token = data.access_token
         navigate("/plan-a-farm-visit");
+        localStorage.setItem("token", token);
+        setToken(token)
+        // alert(JSON.stringify(data));
       } else {
-        alert("Error: " + JSON.stringify(data));
+        alert(JSON.stringify(data.detail));
       }
     } catch (error) {
       console.error("Error:", error);
