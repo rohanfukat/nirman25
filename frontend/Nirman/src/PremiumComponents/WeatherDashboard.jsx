@@ -283,6 +283,22 @@ const WeatherDashboard = () => {
         >
           {loading ? "Submitting..." : "Continue"}
         </button>
+
+        <Link to="/crop-form-premium">
+          <button
+            style={styles.button}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor =
+                styles.buttonHover.backgroundColor)
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor =
+                styles.button.backgroundColor)
+            }
+          >
+            Go to Another Page
+          </button>
+        </Link>
       </div>
 
       {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
