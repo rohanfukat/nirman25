@@ -56,7 +56,14 @@ const SignIn = ({setToken}) => {
         console.log("Hello")
         alert("Login Successfull");
         const token = data.access_token
-        navigate("/plan-a-farm-visit");
+        if( data.premium == "yes"){
+          navigate("/homepage-premium");
+        }
+        else{
+          //naviage to premium route
+          navigate("/access-your-land")
+        }
+        
         localStorage.setItem("token", token);
         setToken(token)
         // alert(JSON.stringify(data));
