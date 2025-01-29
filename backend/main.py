@@ -1,13 +1,17 @@
-from fastapi import FastAPI,UploadFile,File,Form
-from models import userRegister,userLogin,farmerDetail
+from fastapi import FastAPI,UploadFile,File,Form, Depends
+from models import userRegister,userLogin,farmerDetail,prediction
 from db import user_collection,farm_vist_collection
 from fastapi.middleware.cors import CORSMiddleware
 import cloudinary.uploader
 from typing import List
+from fastapi.security import  OAuth2PasswordRequestForm
+import joblib, numpy as np
+
+from auth import create_access_token,ACCESS_TOKEN_EXPIRE_MINUTES,get_current_user
+from datetime import datetime, timedelta
 
 import requests
 import os
-
 
 import cloudinary
 from cloudinary.utils import cloudinary_url
@@ -31,6 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+model = joblib.load("crop_recommendation_model.pkl")
+label_encoder = joblib.load("label_encoder.pkl")
+
 @app.get("/")
 def demo():
     return {"hello world"}
@@ -48,16 +55,15 @@ async def user_register(user:userRegister):
     return {"User Created Successfully "}
 
 @app.post("/login")
-async def user_login(user:userLogin):
-    print(user)
-    get_user = await user_collection.find_one({"email":user.email})
-    if get_user == None:
-        return {"User Not Found"}
+async def user_login(form_data: userLogin):
+    print(form_data)
+    user = await user_collection.find_one({"username":form_data.username})
+    #  if not user or not verify_password(form_data.password, user["hashed_password"]):
+    #     raise HTTPException(status_code=400, detail="Invalid credentials")
     
-    if get_user["password"] == user.password:
-        return {"Login Sucessfull"}
-    else:
-        return {"Invalid Credentials"}
+    access_token = create_access_token({"sub": form_data.username}, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    # return {"access_token": access_token, "token_type": "bearer"}
+    return {"User Login Successfully"}
    
 
 @app.post("/farm-visit")
@@ -70,9 +76,8 @@ async def add_farm(
                 crop:str = Form(...),
                 time_slot:str = Form(...)
                 ):
-    
+           
         try:
-
             file_content = await file.read()
             metadata = farmerDetail(name=name,village=village,location=location,acres=acres,crop=crop,time_slot=time_slot)
 
@@ -133,5 +138,26 @@ async def allFarmVisit():
     
     return documents
     
+@app.get("/protected-route")
+def protected_route(username: str = Depends(get_current_user)):
+    return {"message": f"Hello {username}, you have access to this route!"}
 
 
+@app.post("/model-prediction")
+def prediction(p : prediction):
+    print("Model & Label Encoder loaded successfully!")
+
+    custom_data = np.array([p.nitrogen, p.phosphorus, p.potassium, p.temp, p.humidity, p.ph, p.rainfall], dtype=np.float32).reshape(1, -1)
+
+    # Predict probabilities
+    probabilities = model.predict_proba(custom_data)
+
+    # Convert probabilities to percentage
+    sorted_indices = np.argsort(probabilities[0])[::-1]
+    sorted_classes = label_encoder.inverse_transform(sorted_indices)
+    sorted_probabilities = probabilities[0][sorted_indices] * 100
+    
+    result = {label: round(float(prob),2) for label, prob in zip(sorted_classes, sorted_probabilities)}
+
+    # print(result)
+    return result
