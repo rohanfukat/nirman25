@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-
+from typing import Literal
 
 class userRegister(BaseModel):
     username: str
@@ -10,7 +10,7 @@ class userRegister(BaseModel):
     password: str = Field(
         ..., min_length=8, description="Password must be 8 characters long"
     )
-
+    premium: Literal["yes","no"] = "no"
 
 class userLogin(BaseModel):
     email: str

@@ -1,4 +1,4 @@
-from fastapi import FastAPI,UploadFile,File,Form, Depends, HTTPException
+from fastapi import FastAPI,UploadFile,File,Form, Depends, HTTPException,Header
 from models import userRegister,userLogin,farmerDetail,prediction,insuranceDetail,weatherInfo
 from db import user_collection,farm_vist_collection,farm_insurance
 from fastapi.middleware.cors import CORSMiddleware
@@ -203,3 +203,10 @@ def weatherInfo(loc:weatherInfo):
     if response.status_code == 200:
         return response.json()
     return {"error": "City not found"}
+
+@app.post("/upgrade-user")
+def updateUser(authorization:str = Header(...)):
+    if not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Invalid token format")
+    token = authorization.split(" ")[1]  # Extract token after 'Bearer '
+    print(token)
