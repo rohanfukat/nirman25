@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const PremiumPurchase = () => {
   const [step, setStep] = useState("payment"); // Tracks whether to show payment or confirmation
@@ -33,10 +34,12 @@ const PremiumPurchase = () => {
             gardening journey.
           </p>
           <button
-            onClick={() => (window.location.href = "/insurance-terms")}
+            // onClick={() => (window.location.href = "/homepage-premium")}
             style={styles.button}
           >
+            <Link to='/homepage-premium'>
             Go to Dashboard
+            </Link>
           </button>
         </div>
       </div>

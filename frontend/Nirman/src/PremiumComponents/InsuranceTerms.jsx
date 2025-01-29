@@ -1,6 +1,6 @@
 import React from "react";
 
-const InsuranceTerms = () => {
+const PInsuranceTerms = () => {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
@@ -136,4 +136,4 @@ const styles = {
   },
 };
 
-export default InsuranceTerms;
+export default PInsuranceTerms;
