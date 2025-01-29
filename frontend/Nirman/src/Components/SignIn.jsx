@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const SignIn = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,14 +53,13 @@ const SignIn = () => {
       const data = await response.json();
       if (response.ok) {
         alert(JSON.stringify(data));
+        navigate("/plan-a-farm-visit");
       } else {
         alert("Error: " + JSON.stringify(data));
       }
     } catch (error) {
       console.error("Error:", error);
     }
-
-    
   };
 
   return (
