@@ -6,8 +6,8 @@ import cloudinary.uploader
 from typing import List
 from fastapi.security import  OAuth2PasswordRequestForm
 import joblib, numpy as np
-
-from auth import create_access_token,ACCESS_TOKEN_EXPIRE_MINUTES,get_current_user
+from jose import  jwt
+from auth import create_access_token,ACCESS_TOKEN_EXPIRE_MINUTES,SECRET_KEY,get_current_user,ALGORITHM
 from datetime import datetime, timedelta
 
 import requests
@@ -67,8 +67,10 @@ async def user_login(form_data: userLogin):
     if user['password'] != form_data.password:
         raise HTTPException(status_code=404, detail="Invalid Credentials")
 
+    premium = user['premium']
+
     access_token = create_access_token({"sub": form_data.email}, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer", "premium":premium}
     # return {"User Login Successfully"}
    
 
@@ -205,8 +207,18 @@ def weatherInfo(loc:weatherInfo):
     return {"error": "City not found"}
 
 @app.post("/upgrade-user")
-def updateUser(authorization:str = Header(...)):
+async def updateUser(authorization:str = Header(...)):
     if not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Invalid token format")
     token = authorization.split(" ")[1]  # Extract token after 'Bearer '
-    print(token)
+    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    username: str = payload.get("sub")
+    update_query = {"$set": {"premium": "yes"}} 
+
+    result = await user_collection.update_one({"username":username}, update_query)
+
+    print(result.matched_count)
+    if result.matched_count:
+        print("Document updated successfully!")
+    else:
+        print("No matching document found.")
