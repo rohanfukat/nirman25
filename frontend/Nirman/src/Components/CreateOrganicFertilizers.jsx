@@ -170,19 +170,19 @@ const CreateOrganicFertilizers = () => {
             <div className="card">
               <h3 className="card-title">Getting Started</h3>
               <ul className="list">
-                <li className="list-item">• Collect kitchen scraps</li>
-                <li className="list-item">• Start a compost bin</li>
-                <li className="list-item">• Learn about soil pH</li>
-                <li className="list-item">• Understand plant needs</li>
+                <li className="list-item"> Collect kitchen scraps</li>
+                <li className="list-item"> Start a compost bin</li>
+                <li className="list-item"> Learn about soil pH</li>
+                <li className="list-item"> Understand plant needs</li>
               </ul>
             </div>
             <div className="card">
               <h3 className="card-title">Common Ingredients</h3>
               <ul className="list">
-                <li className="list-item">• Coffee grounds</li>
-                <li className="list-item">• Eggshells</li>
-                <li className="list-item">• Banana peels</li>
-                <li className="list-item">• Green waste</li>
+                <li className="list-item"> Coffee grounds</li>
+                <li className="list-item"> Eggshells</li>
+                <li className="list-item"> Banana peels</li>
+                <li className="list-item"> Green waste</li>
               </ul>
             </div>
           </div>

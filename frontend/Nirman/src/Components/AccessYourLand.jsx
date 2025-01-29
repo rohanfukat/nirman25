@@ -1,5 +1,6 @@
 import React from 'react';
 import { Square, Home, Building } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const AccessYourLand = () => {
   const locations = [
@@ -9,6 +10,7 @@ const AccessYourLand = () => {
       squareFeet: "24 sq ft",
       icon: Square,
       description: "Perfect for container gardens and vertical growing systems",
+      route: "balcony-crop-recommendation",
     },
     {
       title: "Rooftop",
@@ -16,6 +18,7 @@ const AccessYourLand = () => {
       squareFeet: "96 sq ft",
       icon: Building,
       description: "Ideal for mixed container gardens and small raised beds",
+      route: "rooftop-crop-recommendation",
     },
     {
       title: "Veranda",
@@ -23,6 +26,7 @@ const AccessYourLand = () => {
       squareFeet: "300 sq ft",
       icon: Home,
       description: "Suitable for extensive garden beds and greenhouse setups",
+      route: "veranda-crop-recommendation",
     },
   ];
 
@@ -30,115 +34,114 @@ const AccessYourLand = () => {
     <>
       <style>
         {`
-            * {
+          * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            }
+          }
 
-            body {
+          body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #1e293b; /* Slate-900 equivalent */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-            }
+            background-color: #1e293b; /* Slate-900 */
+            overflow-x: hidden;
+          }
 
-            .page-container {
+          .page-container {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100vw;
             height: 100vh;
-            background-color: #1e293b; /* Slate-900 equivalent */
+            background-color: #1e293b; /* Slate-900 */
             padding: 24px;
             box-sizing: border-box;
-            }
+          }
 
-            .content {
+          .content {
             width: 100%;
             max-width: 1200px;
             padding: 24px;
-            background-color: #0f172a; /* Darker background for contrast */
+            background-color: #0f172a; /* Darker contrast */
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            }
+          }
 
-            .heading {
+          .heading {
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 24px;
             text-align: center;
-            color: #4ade80; /* Emerald-300 equivalent */
-            }
+            color: #4ade80; /* Emerald-300 */
+          }
 
-            .grid {
+          .grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 24px;
-            }
+          }
 
-            @media (min-width: 768px) {
+          @media (min-width: 768px) {
             .grid {
-                grid-template-columns: repeat(3, 1fr);
+              grid-template-columns: repeat(3, 1fr);
             }
-            }
+          }
 
-            .card {
+          .card {
             border-radius: 12px;
-            border: 1px solid #334155; /* Slate-700 equivalent */
-            background-color: #1e293b; /* Slate-800 equivalent */
+            border: 1px solid #334155; /* Slate-700 */
+            background-color: #1e293b; /* Slate-800 */
             padding: 24px;
             transition: box-shadow 0.3s;
-            }
+          }
 
-            .card:hover {
+          .card:hover {
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            }
+          }
 
-            .icon-container {
+          .icon-container {
             display: flex;
             justify-content: center;
             margin-bottom: 16px;
-            }
+          }
 
-            .icon {
+          .icon {
             width: 48px;
             height: 48px;
-            color: #4ade80; /* Emerald-400 equivalent */
-            }
+            color: #4ade80; /* Emerald-400 */
+          }
 
-            .card-title {
+          .card-title {
             font-size: 1.25rem;
             font-weight: bold;
-            color: #86efac; /* Emerald-200 equivalent */
+            color: #86efac; /* Emerald-200 */
             margin-bottom: 16px;
             text-align: center;
-            }
+          }
 
-            .details {
+          .details {
             text-align: center;
-            }
+          }
 
-            .details-area {
+          .details-area {
             font-size: 1.125rem;
             font-weight: 600;
-            color: #4ade80; /* Emerald-300 equivalent */
-            }
+            color: #4ade80; /* Emerald-300 */
+          }
 
-            .details-square-feet {
+          .details-square-feet {
             font-size: 0.875rem;
-            color: #94a3b8; /* Slate-400 equivalent */
-            }
+            color: #94a3b8; /* Slate-400 */
+          }
 
-            .description {
+          .description {
             margin-top: 16px;
-            color: #cbd5e1; /* Slate-300 equivalent */
-            }
+            color: #cbd5e1; /* Slate-300 */
+          }
 
-            /* Button Styling */
-            .card button {
-            background-color: #4ade80; /* Emerald-400 background */
-            color: white; /* White text */
+          .card button {
+            background-color: #4ade80; /* Emerald-400 */
+            color: white;
             padding: 12px 24px;
             border-radius: 8px;
             font-weight: 600;
@@ -146,19 +149,39 @@ const AccessYourLand = () => {
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s ease-in-out;
             margin-top: 16px;
-            width: 100%; /* Full width */
-            }
+            width: 100%;
+          }
 
-            .card button:hover {
-            background-color: #38b2ac; /* Emerald-500 background on hover */
-            transform: scale(1.05); /* Slight scale up on hover */
-            }
+          .card button:hover {
+            background-color: #38b2ac; /* Emerald-500 */
+            transform: scale(1.05);
+          }
 
-            .card button:focus {
+          .card button:focus {
             outline: none;
-            box-shadow: 0 0 0 4px rgba(72, 219, 141, 0.6); /* Emerald focus outline */
-            }
+            box-shadow: 0 0 0 4px rgba(72, 219, 141, 0.6); /* Emerald focus */
+          }
 
+          .premium-button-container {
+            text-align: center;
+            margin-top: 24px;
+          }
+
+          .premium-button {
+            background-color: #facc15; /* Amber-400 */
+            color: black;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+          }
+
+          .premium-button:hover {
+            background-color: #eab308; /* Amber-500 */
+            transform: scale(1.05);
+          }
         `}
       </style>
       <div className="page-container">
@@ -178,10 +201,17 @@ const AccessYourLand = () => {
                     <div className="details-square-feet">{location.squareFeet}</div>
                     <p className="description">{location.description}</p>
                   </div>
-                  <button>Choose</button>
+                  <button>
+                    <Link to={location.route}>Choose</Link>
+                  </button>
                 </div>
               );
             })}
+          </div>
+          <div className="premium-button-container">
+            <button className="premium-button">
+                <Link to="/buy-premium">Need more accurate solutions with returns if failed?</Link>
+            </button>
           </div>
         </div>
       </div>
