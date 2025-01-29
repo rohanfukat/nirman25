@@ -1,6 +1,6 @@
-from fastapi import FastAPI,UploadFile,File,Form, Depends
-from models import userRegister,userLogin,farmerDetail,prediction
-from db import user_collection,farm_vist_collection
+from fastapi import FastAPI,UploadFile,File,Form, Depends, HTTPException
+from models import userRegister,userLogin,farmerDetail,prediction,insuranceDetail
+from db import user_collection,farm_vist_collection,farm_insurance
 from fastapi.middleware.cors import CORSMiddleware
 import cloudinary.uploader
 from typing import List
@@ -56,14 +56,20 @@ async def user_register(user:userRegister):
 
 @app.post("/login")
 async def user_login(form_data: userLogin):
-    print(form_data)
-    user = await user_collection.find_one({"username":form_data.username})
+    # print(form_data)
+    user = await user_collection.find_one({"username":form_data.email})
+    # print(user)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
     #  if not user or not verify_password(form_data.password, user["hashed_password"]):
     #     raise HTTPException(status_code=400, detail="Invalid credentials")
     
-    access_token = create_access_token({"sub": form_data.username}, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    # return {"access_token": access_token, "token_type": "bearer"}
-    return {"User Login Successfully"}
+    if user['password'] != form_data.password:
+        raise HTTPException(status_code=404, detail="Invalid Credentials")
+
+    access_token = create_access_token({"sub": form_data.email}, timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    return {"access_token": access_token, "token_type": "bearer"}
+    # return {"User Login Successfully"}
    
 
 @app.post("/farm-visit")
@@ -161,3 +167,39 @@ def prediction(p : prediction):
 
     # print(result)
     return result
+
+@app.post("/insurance-details")
+async def add_insurance(
+                file:UploadFile = File(...),
+                name:str = Form(...),
+                email:str = Form(...),
+                description:str = Form(...)):
+    
+    file_content = await file.read()
+    insurance_data = insuranceDetail(name=name,email=email,description=description)
+
+    upload_result = cloudinary.uploader.upload(file_content, resource_type = "image")
+
+    image_url = upload_result.get("secure_url")
+
+    data = {
+        "name": insurance_data.name,
+        "email": insurance_data.email,
+        "description": insurance_data.description,
+        "url" : str(image_url)
+    }
+
+    result = await farm_insurance.insert_one(data)
+
+    return {"Farm Insurance Details Added Successfully":str(result)}
+
+
+@app.post("/weather-info")
+def weatherInfo(location:str = Form(...)):
+    API_KEY = "fdbabb1dbd4edda75b0391ce4ccee92b"
+    BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+    url = f"{BASE_URL}?q={location}&appid={API_KEY}&units=metric"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    return {"error": "City not found"}
