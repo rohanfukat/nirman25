@@ -172,10 +172,10 @@ def prediction(p : prediction):
 
 @app.post("/insurance-details")
 async def add_insurance(
-                file:UploadFile = File(...),
                 name:str = Form(...),
                 email:str = Form(...),
-                description:str = Form(...)):
+                description:str = Form(...),
+                file:UploadFile = File(...)):
     
     file_content = await file.read()
     insurance_data = insuranceDetail(name=name,email=email,description=description)

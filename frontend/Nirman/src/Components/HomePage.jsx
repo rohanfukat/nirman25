@@ -129,13 +129,17 @@ const HomePage = () => {
       fontFamily: "Arial, sans-serif",
       backgroundColor: "#0f172a",
       overflowX: "hidden",
+      
     },
     container: {
       height: "100vh",
-      width: "100vw",
+      width: "97.9vw",
       backgroundColor: "#0f172a",
       display: "flex",
       flexDirection: "column",
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: "cover",
+        backgroundPosition: "center"
     },
     header: {
       backgroundColor: "#052e16",

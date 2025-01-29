@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ token, setToken }) => {
   const [hoveredLink, setHoveredLink] = useState(null);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken('');
+    // Changed navigation to redirect to sign in page instead of home
+    navigate('/signin');
+  };
 
   const styles = {
     nav: {
-      backgroundColor: '#1e293b', // Slate-800
+      backgroundColor: '#1e293b',
       padding: '1rem',
       width: '100%',
     },
@@ -20,7 +28,7 @@ const Navbar = () => {
     logo: {
       display: 'flex',
       alignItems: 'center',
-      color: '#4ade80', // Emerald-400
+      color: '#4ade80',
       fontWeight: 'bold',
       fontSize: '1.75rem',
     },
@@ -34,7 +42,7 @@ const Navbar = () => {
       gap: '1.5rem',
     },
     link: {
-      color: '#bbf7d0', // Emerald-200
+      color: '#bbf7d0',
       textDecoration: 'none',
       fontSize: '1rem',
       padding: '0.5rem',
@@ -43,12 +51,12 @@ const Navbar = () => {
       cursor: 'pointer',
     },
     linkHover: {
-      backgroundColor: '#4ade80', // Emerald-400
-      color: '#1e293b', // Slate-800
+      backgroundColor: '#4ade80',
+      color: '#1e293b',
     },
     signOut: {
-      backgroundColor: '#4ade80', // Emerald-400
-      color: '#1e293b', // Slate-800
+      backgroundColor: '#4ade80',
+      color: '#1e293b',
       padding: '0.5rem 1rem',
       borderRadius: '0.5rem',
       border: 'none',
@@ -57,12 +65,12 @@ const Navbar = () => {
       transition: 'background-color 0.3s, transform 0.2s ease',
     },
     signOutHover: {
-      backgroundColor: '#38b2ac', // Emerald-500
+      backgroundColor: '#38b2ac',
       transform: 'scale(1.05)',
     },
     premium: {
-      backgroundColor: '#1e293b', // Slate-800
-      color: '#fbbf24', // Amber-400 for golden yellow
+      backgroundColor: '#1e293b',
+      color: '#fbbf24',
       padding: '0.5rem 1rem',
       borderRadius: '0.5rem',
       border: '2px solid #fbbf24',
@@ -80,7 +88,6 @@ const Navbar = () => {
   return (
     <nav style={styles.nav}>
       <div style={styles.container}>
-        {/* Logo */}
         <div style={styles.logo}>
           <img
             src="/logo.png"
@@ -90,7 +97,6 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Navigation Links */}
         <div style={styles.links}>
           <Link
             to="/"
@@ -137,7 +143,6 @@ const Navbar = () => {
             Assess Your Land
           </Link>
 
-          {/* Premium Button */}
           <Link
             to="/buy-premium"
             style={{
@@ -150,18 +155,32 @@ const Navbar = () => {
             Premium
           </Link>
 
-          {/* Sign Up Button */}
-          <Link
-            to="/signup"
-            style={{
-              ...styles.signOut,
-              ...(hoveredLink === 'Sign Up' ? styles.signOutHover : {}),
-            }}
-            onMouseEnter={() => setHoveredLink('Sign Up')}
-            onMouseLeave={() => setHoveredLink(null)}
-          >
-            Sign Up
-          </Link>
+          {!token ? (
+            <Link
+              to="/signup"
+              style={{
+                ...styles.signOut,
+                ...(hoveredLink === 'Sign Up' ? styles.signOutHover : {}),
+              }}
+              onMouseEnter={() => setHoveredLink('Sign Up')}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              Sign Up
+            </Link>
+          ) : (
+            // Removed the Link wrapper around the button since we're using programmatic navigation
+            <button
+              onClick={handleLogout}
+              style={{
+                ...styles.signOut,
+                ...(hoveredLink === 'Logout' ? styles.signOutHover : {}),
+              }}
+              onMouseEnter={() => setHoveredLink('Logout')}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>
