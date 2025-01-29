@@ -12,7 +12,6 @@ import BalconyCropRecommender from './Components/BalconyCropRecommendation';
 import RooftopCropRecommender from './Components/RooftopCropRecommendation';
 import VerandaCropRecommender from './Components/VerandaCropRecommendation';
 import BuyPremium from './Components/BuyPremium';
-import InsuranceTerms from './PremiumComponents/InsuranceTerms';
 import PremiumPurchase from './Components/PremiumPurchase';
 import WeatherDashboard from './PremiumComponents/WeatherDashboard';
 import PHomePage from './PremiumComponents/HomePage';
@@ -21,13 +20,15 @@ import PCreateOrganicFertilizers from './PremiumComponents/CreateOrganicFertiliz
 import PPlanAFarmVisit from './PremiumComponents/PlanAFarmVisit';
 import PAccessYourLand from './PremiumComponents/AccessYourLand';
 import PInsuranceTerms from './PremiumComponents/InsuranceTerms';
+import PCropForm from './PremiumComponents/PCropForm';
+import PCropAns from './PremiumComponents/PCropAns';
 
 // Wrapper component to handle navbar logic
 const AppContent = () => {
   const location = useLocation();
   
   // Check if we're on the premium homepage or other premium routes
-  const isPremiumRoute = (location.pathname === '/homepage-premium') || (location.pathname === '/create-organic-fertilizers-premium') || (location.pathname === '/access-your-land-premium') || (location.pathname === '/plan-a-farm-visit-premium') || (location.pathname === '/insurance-terms-premium');
+  const isPremiumRoute = (location.pathname === '/homepage-premium') || (location.pathname === '/create-organic-fertilizers-premium') || (location.pathname === '/access-your-land-premium') || (location.pathname === '/plan-a-farm-visit-premium') || (location.pathname === '/insurance-terms-premium') || (location.pathname === '/weather-dashboard-premium');
   
   return (
     <>
@@ -62,6 +63,9 @@ const AppContent = () => {
         <Route path="/plan-a-farm-visit-premium" element={<PPlanAFarmVisit />} />
         <Route path="/access-your-land-premium" element={<PAccessYourLand />} />
         <Route path="/insurance-terms-premium" element={<PInsuranceTerms />} />
+        <Route path="/access-your-land-premium/weather-dashboard-premium" element={<WeatherDashboard />} />
+        <Route path="/crop-form-premium" element={<PCropForm />} />
+        <Route path="/crop-ans-premium" element={<PCropAns />} />
       </Routes>
     </>
   );
