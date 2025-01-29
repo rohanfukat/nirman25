@@ -14,9 +14,7 @@ const WeatherDashboard = () => {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Sample data structure - replace with your actual API data
-  const weatherData = {
+  const [weatherData, setWeatherData] = useState({
     temp: 22,
     temp_min: 18,
     temp_max: 25,
@@ -24,7 +22,7 @@ const WeatherDashboard = () => {
     pressure: 1015,
     humidity: 65,
     wind_speed: 12,
-  };
+  });
 
   const styles = {
     container: {
@@ -171,12 +169,12 @@ const WeatherDashboard = () => {
     setError("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/location", {
+      const response = await fetch("http://127.0.0.1:8000/weather-info", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ location }),
+        body: JSON.stringify({ location: location }),
       });
 
       if (!response.ok) {
@@ -184,8 +182,16 @@ const WeatherDashboard = () => {
       }
 
       const data = await response.json();
-      console.log("Location sent successfully:", data);
-      // Handle the response if needed (like redirect or display success message)
+      setWeatherData({
+        temp: data.main["temp"],
+        temp_min: data.main["temp_min"],
+        temp_max: data.main["temp_max"],
+        feels_like: data.main["feels_like"],
+        humidity: data.main["humidity"],
+        pressure: data.main["pressure"],
+        wind_speed: data.wind["speed"],
+      });
+      console.log(data);
     } catch (err) {
       setError(`Error: ${err.message}`);
     } finally {

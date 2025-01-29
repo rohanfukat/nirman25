@@ -41,4 +41,7 @@ class insuranceDetail(BaseModel):
     name:str
     email:EmailStr
     description:str
+    
+class weatherInfo(BaseModel):
+    location:str
 

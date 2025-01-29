@@ -1,5 +1,5 @@
 from fastapi import FastAPI,UploadFile,File,Form, Depends, HTTPException
-from models import userRegister,userLogin,farmerDetail,prediction,insuranceDetail
+from models import userRegister,userLogin,farmerDetail,prediction,insuranceDetail,weatherInfo
 from db import user_collection,farm_vist_collection,farm_insurance
 from fastapi.middleware.cors import CORSMiddleware
 import cloudinary.uploader
@@ -195,10 +195,10 @@ async def add_insurance(
 
 
 @app.post("/weather-info")
-def weatherInfo(location:str = Form(...)):
+def weatherInfo(loc:weatherInfo):
     API_KEY = "fdbabb1dbd4edda75b0391ce4ccee92b"
     BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
-    url = f"{BASE_URL}?q={location}&appid={API_KEY}&units=metric"
+    url = f"{BASE_URL}?q={loc.location}&appid={API_KEY}&units=metric"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
