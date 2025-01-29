@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const PremiumPurchase = () => {
-  const [step, setStep] = useState("payment"); // Tracks whether to show payment or confirmation
+  const [step, setStep] = useState("payment");
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
     expiryDate: "",
@@ -14,13 +14,38 @@ const PremiumPurchase = () => {
     setPaymentDetails({ ...paymentDetails, [name]: value });
   };
 
-  const handlePayment = (e) => {
+  const handlePayment = async (e) => {
     e.preventDefault();
-    // Simulate payment process
-    setTimeout(() => {
-      alert("Payment successful! Your premium service is activated.");
+    
+    try {
+      // Get token from local storage
+      const token = localStorage.getItem('token');
+    
+      if (!token) {
+        throw new Error('Authentication token not found');
+      }
+      console.log(token)
+      // Make API request with token in header
+      const response = await fetch('http://localhost:8000/upgrade-user', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(paymentDetails)
+      });
+
+      if (!response.ok) {
+        throw new Error('Payment failed');
+      }
+
+      const data = await response.json();
+      
+      // Handle successful payment
       setStep("confirmation");
-    }, 2000);
+    } catch (error) {
+      alert(`Payment failed: ${error.message}`);
+    }
   };
 
   if (step === "confirmation") {
@@ -33,12 +58,9 @@ const PremiumPurchase = () => {
             to accurate crop recommendations and insurance coverage for your
             gardening journey.
           </p>
-          <button
-            // onClick={() => (window.location.href = "/homepage-premium")}
-            style={styles.button}
-          >
+          <button style={styles.button}>
             <Link to='/homepage-premium'>
-            Go to Dashboard
+              Go to Dashboard
             </Link>
           </button>
         </div>

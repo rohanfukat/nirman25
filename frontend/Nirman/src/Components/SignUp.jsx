@@ -151,6 +151,7 @@ const SignUp = () => {
               style={styles.input}
               value={formData.username}
               onChange={handleChange}
+              required
             />
             {errors.username && <span style={styles.error}>{errors.username}</span>}
           </div>
@@ -163,6 +164,7 @@ const SignUp = () => {
               style={styles.input}
               value={formData.email}
               onChange={handleChange}
+              required
             />
             {errors.email && <span style={styles.error}>{errors.email}</span>}
           </div>
@@ -175,6 +177,8 @@ const SignUp = () => {
               style={styles.input}
               value={formData.phone}
               onChange={handleChange}
+              pattern="\d{10}"
+              required
             />
             {errors.phone && <span style={styles.error}>{errors.phone}</span>}
           </div>
@@ -187,6 +191,8 @@ const SignUp = () => {
               style={styles.input}
               value={formData.password}
               onChange={handleChange}
+              pattern="[A-Za-z0-9@#$%^&*]{8}"
+              required
             />
             {errors.password && <span style={styles.error}>{errors.password}</span>}
           </div>

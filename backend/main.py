@@ -1,5 +1,5 @@
-from fastapi import FastAPI,UploadFile,File,Form, Depends, HTTPException
-from models import userRegister,userLogin,farmerDetail,prediction,insuranceDetail
+from fastapi import FastAPI,UploadFile,File,Form, Depends, HTTPException,Header
+from models import userRegister,userLogin,farmerDetail,prediction,insuranceDetail,weatherInfo
 from db import user_collection,farm_vist_collection,farm_insurance
 from fastapi.middleware.cors import CORSMiddleware
 import cloudinary.uploader
@@ -170,10 +170,10 @@ def prediction(p : prediction):
 
 @app.post("/insurance-details")
 async def add_insurance(
-                file:UploadFile = File(...),
                 name:str = Form(...),
                 email:str = Form(...),
-                description:str = Form(...)):
+                description:str = Form(...),
+                file:UploadFile = File(...)):
     
     file_content = await file.read()
     insurance_data = insuranceDetail(name=name,email=email,description=description)
@@ -195,11 +195,18 @@ async def add_insurance(
 
 
 @app.post("/weather-info")
-def weatherInfo(location:str = Form(...)):
+def weatherInfo(loc:weatherInfo):
     API_KEY = "fdbabb1dbd4edda75b0391ce4ccee92b"
     BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
-    url = f"{BASE_URL}?q={location}&appid={API_KEY}&units=metric"
+    url = f"{BASE_URL}?q={loc.location}&appid={API_KEY}&units=metric"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
     return {"error": "City not found"}
+
+@app.post("/upgrade-user")
+def updateUser(authorization:str = Header(...)):
+    if not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Invalid token format")
+    token = authorization.split(" ")[1]  # Extract token after 'Bearer '
+    print(token)

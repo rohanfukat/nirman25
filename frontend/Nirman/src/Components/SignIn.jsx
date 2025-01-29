@@ -56,7 +56,14 @@ const SignIn = ({setToken}) => {
         console.log("Hello")
         alert("Login Successfull");
         const token = data.access_token
-        navigate("/plan-a-farm-visit");
+        if( data.premium == "yes"){
+          navigate("/homepage-premium");
+        }
+        else{
+          //naviage to premium route
+          navigate("/access-your-land")
+        }
+        
         localStorage.setItem("token", token);
         setToken(token)
         // alert(JSON.stringify(data));
@@ -192,7 +199,7 @@ const SignIn = ({setToken}) => {
           <h1 className="form-title">Sign In</h1>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Account Name / Mail:</label>
+              <label>Account Name :</label>
               <input
                 type="text"
                 name="email"
@@ -212,6 +219,8 @@ const SignIn = ({setToken}) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
+                pattern="[A-Za-z0-9@#$%^&*]{8}"
+                required
               />
               {errors.password && (
                 <span className="error-message">{errors.password}</span>
