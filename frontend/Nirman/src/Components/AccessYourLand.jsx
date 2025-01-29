@@ -201,9 +201,11 @@ const AccessYourLand = () => {
                     <div className="details-square-feet">{location.squareFeet}</div>
                     <p className="description">{location.description}</p>
                   </div>
+                  <Link to={location.route}>
                   <button>
-                    <Link to={location.route}>Choose</Link>
+                    Choose
                   </button>
+                  </Link>
                 </div>
               );
             })}
