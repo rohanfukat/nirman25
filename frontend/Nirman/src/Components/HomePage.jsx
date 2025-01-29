@@ -296,7 +296,9 @@ const HomePage = () => {
         {/* Call to Action */}
         <div style={styles.cta}>
           <h2 style={styles.ctaTitle}>Ready to Start Your Farming Journey?</h2>
-          <button style={styles.ctaButton}>Join Our Community</button>
+          <Link to='/community' style={{textDecoration:'none'}}>
+           <button style={styles.ctaButton}>Join Our Community</button>
+          </Link>
         </div>
       </main>
     </div>
