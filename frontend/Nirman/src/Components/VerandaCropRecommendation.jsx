@@ -12,7 +12,10 @@ const VerandaCropRecommender = () => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: '2rem',
-      width:'100vw'
+      width:'100vw',
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     formContainer: {
       backgroundColor: '#1e293b',

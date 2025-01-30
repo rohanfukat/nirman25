@@ -56,6 +56,9 @@ const PAccessYourLand = () => {
             background-color: #1e293b; /* Slate-900 */
             padding: 24px;
             box-sizing: border-box;
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .content {

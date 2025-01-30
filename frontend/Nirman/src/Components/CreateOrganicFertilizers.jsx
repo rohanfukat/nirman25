@@ -74,6 +74,9 @@ const CreateOrganicFertilizers = () => {
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .video-container {

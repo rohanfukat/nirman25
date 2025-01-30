@@ -139,7 +139,7 @@ const HomePage = () => {
       flexDirection: "column",
       backgroundImage: "url('/bg.jpg')",
       backgroundSize: "cover",
-        backgroundPosition: "center"
+      backgroundPosition: "center"
     },
     header: {
       backgroundColor: "#052e16",

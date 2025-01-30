@@ -115,6 +115,11 @@ const PCropForm = () => {
       backgroundColor: "#1e293b",
       borderRadius: "8px",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      gap:"10px",
+      paddingTop:"40px",
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     label: {
       display: "block",
@@ -171,6 +176,10 @@ const PCropForm = () => {
       color: "green",
       marginTop: "1rem",
     },
+    h2:{
+      paddingTop: "5px",
+      
+    }
   };
 
   return (

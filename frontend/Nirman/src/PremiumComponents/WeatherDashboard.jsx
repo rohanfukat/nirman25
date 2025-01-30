@@ -29,6 +29,9 @@ const WeatherDashboard = () => {
       width: "95vw",
       margin: "0 auto",
       padding: "1.5rem",
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     inputContainer: {
       marginBottom: "1.5rem",
@@ -121,8 +124,14 @@ const WeatherDashboard = () => {
       marginLeft: "0.25rem",
     },
     buttonContainer: {
+      padding:'50%',
       textAlign: "center",
       marginTop: "2rem",
+      padding:"10px",
+      gap:'20px',
+      display:'flex',
+      justifyContent:'center',
+      alignItems:'center'
     },
     button: {
       backgroundColor: "#4ade80",
@@ -281,7 +290,7 @@ const WeatherDashboard = () => {
               styles.button.backgroundColor)
           }
         >
-          {loading ? "Submitting..." : "Continue"}
+          {loading ? "Submitting..." : "Calculate"}
         </button>
 
         <Link to="/crop-form-premium">
@@ -296,7 +305,7 @@ const WeatherDashboard = () => {
                 styles.button.backgroundColor)
             }
           >
-            Go to Another Page
+            Continue
           </button>
         </Link>
       </div>

@@ -24,6 +24,9 @@ const PInsuranceTerms = () => {
       backgroundColor: "#0f172a", // slate-900
       display: "flex",
       flexDirection: "column",
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     header: {
       backgroundColor: "#052e16", // green-950

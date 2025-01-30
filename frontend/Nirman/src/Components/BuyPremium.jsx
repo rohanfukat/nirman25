@@ -28,6 +28,9 @@ const BuyPremium = () => {
             background-color: #0f172a; /* Darker contrast */
             padding: 24px;
             box-sizing: border-box;
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .content {

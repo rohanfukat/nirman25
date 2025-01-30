@@ -73,7 +73,7 @@ const PremiumPurchase = () => {
       <div style={styles.card}>
         <h1 style={styles.title}>Complete Your Payment</h1>
         <p style={styles.description}>
-          Pay ₹499 for the Premium Service and unlock accurate crop
+          Pay ₹399 for the Premium Service and unlock accurate crop
           recommendations with insurance coverage.
         </p>
         <form onSubmit={handlePayment} style={styles.form}>
@@ -134,6 +134,9 @@ const styles = {
     backgroundColor: "#1e293b",
     minHeight: "100vh",
     padding: "24px",
+    backgroundImage: "url('/bg.jpg')",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
   },
   card: {
     backgroundColor: "#0f172a",

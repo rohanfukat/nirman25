@@ -37,6 +37,7 @@ const PCropAns = () => {
         borderRadius: "8px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         color: "#bbf7d0",
+        
       }}
     >
       <h2

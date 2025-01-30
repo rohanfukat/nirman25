@@ -43,8 +43,8 @@ const AccessYourLand = () => {
           body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #1e293b; /* Slate-900 */
             overflow-x: hidden;
+            
           }
 
           .page-container {
@@ -56,6 +56,9 @@ const AccessYourLand = () => {
             background-color: #1e293b; /* Slate-900 */
             padding: 24px;
             box-sizing: border-box;
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .content {
@@ -185,7 +188,7 @@ const AccessYourLand = () => {
         `}
       </style>
       <div className="page-container">
-        <div className="content">
+        <div className="content" >
           <h2 className="heading">Choose Your Growing Space</h2>
           <div className="grid">
             {locations.map((location) => {
@@ -212,9 +215,11 @@ const AccessYourLand = () => {
             })}
           </div>
           <div className="premium-button-container">
+          <Link to="/buy-premium">
             <button className="premium-button">
-                <Link to="/buy-premium">Need more accurate solutions with returns if failed?</Link>
+                Need more accurate solutions with returns if failed?
             </button>
+            </Link>
           </div>
         </div>
       </div>

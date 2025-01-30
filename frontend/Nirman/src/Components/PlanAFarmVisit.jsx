@@ -4,6 +4,7 @@ const PlanAFarmVisit = () => {
   const [farmers, setFarmers] = useState([]); // Initial state is an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const date=new Date();
 
   useEffect(() => {
     const fetchFarmers = async () => {
@@ -67,6 +68,9 @@ const PlanAFarmVisit = () => {
             gap: 16px;
             justify-content: center;
             align-items: center;
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .card {
@@ -88,6 +92,7 @@ const PlanAFarmVisit = () => {
 
           .image-container {
             width: 30%;
+            paddingRight:100px;
           }
 
           .image {
@@ -95,20 +100,25 @@ const PlanAFarmVisit = () => {
             height: 100%;
             object-fit: cover;
             border-radius: 0.5rem;
+            paddingRight:100px;
           }
 
           .info-container {
             flex: 1;
-            padding: 1.5rem;
+            padding-left: 7rem;
+            padding-top: 4rem;
           }
 
           .label {
             color: #4ade80;
             font-weight: 600;
+            paddingLeft: 200px;
+            font-size:20px;
           }
 
           .value {
             color: #cbd5e1;
+            font-size:20px;
           }
 
           .button {
@@ -128,6 +138,7 @@ const PlanAFarmVisit = () => {
 
           .space-y-4 > * + * {
             margin-top: 1rem;
+            paddingLeft:20px;
           }
 
           .grid {
@@ -191,7 +202,7 @@ const PlanAFarmVisit = () => {
 
                 {/* Button */}
                 <div className="flex justify-start">
-                  <button className="button">Book Appointment</button>
+                <button className="button" onClick={()=> alert(`Your Appointment has been booked for ${date.toDateString(date.setDate(date.getDate() + 9))}`)}>Book Appointment</button>
                 </div>
               </div>
             </div>

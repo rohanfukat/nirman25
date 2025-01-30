@@ -28,6 +28,9 @@ const PCreateOrganicFertilizers = () => {
             background-color: #1e293b; /* Slate-900 equivalent */
             padding: 24px;
             box-sizing: border-box;
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .header {

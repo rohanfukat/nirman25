@@ -7,7 +7,10 @@ const CommunityPage = () => {
       minHeight: "100vh",
       backgroundColor: "#0f172a",
       color: "#f0fdf4",
-      width: "100vw"
+      width: "100vw",
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     hero: {
       backgroundColor: "#052e16",
@@ -33,14 +36,14 @@ const CommunityPage = () => {
     sectionTitle: {
       fontSize: "2rem",
       fontWeight: "bold",
-      marginBottom: "2rem",
+      marginBottom: "2px",
       color: "#4ade80",
     },
     grid: {
       display: "grid",
       gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
       gap: "2rem",
-      marginBottom: "3rem",
+      marginBottom: "3px",
     },
     card: {
       backgroundColor: "#1e293b",

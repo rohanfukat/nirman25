@@ -4,6 +4,7 @@ const PPlanAFarmVisit = () => {
   const [farmers, setFarmers] = useState([]); // Initial state is an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const date=new Date();
 
   useEffect(() => {
     const fetchFarmers = async () => {
@@ -67,6 +68,9 @@ const PPlanAFarmVisit = () => {
             gap: 16px;
             justify-content: center;
             align-items: center;
+            background-image: url('/bg.jpg');
+            background-size: cover;
+            background-position: center;
           }
 
           .card {
@@ -191,7 +195,7 @@ const PPlanAFarmVisit = () => {
 
                 {/* Button */}
                 <div className="flex justify-start">
-                  <button className="button">Book Appointment</button>
+                  <button className="button" onClick={()=> alert(`Your Appointment has been booked for ${date.toDateString(date.setDate(date.getDate() + 3))}`)}>Book Appointment</button>
                 </div>
               </div>
             </div>

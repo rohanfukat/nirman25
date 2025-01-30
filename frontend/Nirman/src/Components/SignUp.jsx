@@ -22,6 +22,9 @@ const SignUp = () => {
       alignItems: 'center',
       padding: '2rem',
       width: '100vw',
+      backgroundImage: "url('/bg.jpg')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
     },
     formContainer: {
       backgroundColor: '#1e293b',
@@ -191,7 +194,6 @@ const SignUp = () => {
               style={styles.input}
               value={formData.password}
               onChange={handleChange}
-              pattern="[A-Za-z0-9@#$%^&*]{8}"
               required
             />
             {errors.password && <span style={styles.error}>{errors.password}</span>}

@@ -100,6 +100,9 @@ const SignIn = ({setToken}) => {
               width:100vw;
               padding: 24px;
               background-color: #1e293b;
+              background-image: url('/bg.jpg');
+              background-size: cover;
+              background-position: center;
             }
 
             .form-container {
@@ -219,7 +222,6 @@ const SignIn = ({setToken}) => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                pattern="[A-Za-z0-9@#$%^&*]{8}"
                 required
               />
               {errors.password && (
